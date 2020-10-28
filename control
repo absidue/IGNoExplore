@@ -1,0 +1,10 @@
+Package: me.absidue.ignoexplore
+Name: IGNoExplore
+Version: 0.0.1
+Depends: firmware (>= 13.0), firmware (<= 13.7)
+Architecture: iphoneos-arm
+Description: Hides the explore page on Instagram and enters search field straight away
+Maintainer: absidue
+Author: absidue
+Section: Tweaks
+Tag: compatible_min::ios13.0, compatible_max::ios13.7
