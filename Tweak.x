@@ -1,6 +1,7 @@
 #import "Tweak.h"
 
 #define IS_BUNDLE_EQUAL_TO(bundleId) CFEqual(CFBundleGetIdentifier(CFBundleGetMainBundle()), CFSTR(bundleId))
+#define GET_IVAR(className,instance,variable) object_getIvar(instance, class_getInstanceVariable(objc_getClass(#className), #variable))
 
 
 %hook IGViewController
@@ -8,20 +9,17 @@
 - (void)viewWillAppear:(BOOL)animated {
     %orig;
     if ([NSStringFromClass([self class]) isEqual: @"IGExploreViewController"]) {
-        Ivar searchTitleViewIvar = class_getInstanceVariable([%c(IGExploreViewController) class], "_searchTitleView");
-        IGExploreSeachTitleView *searchTitleView = (IGExploreSeachTitleView *)object_getIvar(self, searchTitleViewIvar);
+        IGExploreSeachTitleView *searchTitleView = GET_IVAR(IGExploreViewController, self, _searchTitleView);
 
-        Ivar searchBarIvar = class_getInstanceVariable([%c(IGExploreSeachTitleView) class], "_searchBar");
-        IGSearchBar *searchBar = (IGSearchBar *)object_getIvar(searchTitleView, searchBarIvar);
+        IGSearchBar *searchBar = GET_IVAR(IGExploreSeachTitleView, searchTitleView, _searchBar);
 
         [self searchTitleViewDidRequestSearchPresentation:searchBar];
 
 
-        Ivar shimmeringGridViewIvar = class_getInstanceVariable([%c(IGExploreViewController) class], "_shimmeringGridView");
-        IGShimmeringGridView *shimmeringGridView = (IGShimmeringGridView *)object_getIvar(self, shimmeringGridViewIvar);
+        IGShimmeringGridView *shimmeringGridView = GET_IVAR(IGExploreViewController, self, _shimmeringGridView);
 
         shimmeringGridView.hidden = YES;
-    } else if ([NSStringFromClass([self class]) isEqual: @"IGExploreGridViewController"]) {
+    } else if ([NSStringFromClass([self class]) isEqual:@"IGExploreGridViewController"]) {
         [self scrollView].hidden = YES;
     }
 }
