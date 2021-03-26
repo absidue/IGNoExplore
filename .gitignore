@@ -1,2 +1,4 @@
 .dragon
 .DS_Store
+.theos
+packages/*+debug*
