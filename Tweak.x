@@ -8,7 +8,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     %orig;
-    if ([NSStringFromClass([self class]) isEqual: @"IGExploreViewController"]) {
+    NSString *clazz = NSStringFromClass([self class]);
+    if ([clazz isEqualToString:@"IGExploreViewController"]) {
         IGExploreSeachTitleView *searchTitleView = GET_IVAR(IGExploreViewController, self, _searchTitleView);
 
         IGSearchBar *searchBar = GET_IVAR(IGExploreSeachTitleView, searchTitleView, _searchBar);
@@ -19,7 +20,7 @@
         IGShimmeringGridView *shimmeringGridView = GET_IVAR(IGExploreViewController, self, _shimmeringGridView);
 
         shimmeringGridView.hidden = YES;
-    } else if ([NSStringFromClass([self class]) isEqual:@"IGExploreGridViewController"]) {
+    } else if ([clazz isEqualToString:@"IGExploreGridViewController"]) {
         [self scrollView].hidden = YES;
     }
 }
