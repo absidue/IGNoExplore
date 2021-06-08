@@ -4,12 +4,16 @@
 #define GET_IVAR(className,instance,variable) object_getIvar(instance, class_getInstanceVariable(objc_getClass(#className), #variable))
 
 
+Class class_IGExploreViewController;
+Class class_IGExploreGridViewController;
+
+
 %hook IGViewController
 
 - (void)viewWillAppear:(BOOL)animated {
     %orig;
-    NSString *clazz = NSStringFromClass([self class]);
-    if ([clazz isEqualToString:@"IGExploreViewController"]) {
+    Class clazz = [self class];
+    if (clazz == class_IGExploreViewController) {
         IGExploreSeachTitleView *searchTitleView = GET_IVAR(IGExploreViewController, self, _searchTitleView);
 
         IGSearchBar *searchBar = GET_IVAR(IGExploreSeachTitleView, searchTitleView, _searchBar);
@@ -20,7 +24,7 @@
         IGShimmeringGridView *shimmeringGridView = GET_IVAR(IGExploreViewController, self, _shimmeringGridView);
 
         shimmeringGridView.hidden = YES;
-    } else if ([clazz isEqualToString:@"IGExploreGridViewController"]) {
+    } else if (clazz == class_IGExploreGridViewController) {
         [self scrollView].hidden = YES;
     }
 }
@@ -40,6 +44,8 @@
 
 %ctor {
     if (IS_BUNDLE_EQUAL_TO("com.burbn.instagram")) {
+        class_IGExploreViewController = objc_getClass("IGExploreViewController");
+        class_IGExploreGridViewController = objc_getClass("IGExploreGridViewController");
         %init;
     }
 }

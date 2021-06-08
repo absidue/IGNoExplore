@@ -1,6 +1,6 @@
 Package: me.absidue.ignoexplore
 Name: IGNoExplore
-Version: 0.0.3
+Version: 0.0.4
 Depends: firmware (>= 13.0), org.coolstar.libhooker | mobilesubstrate
 Architecture: iphoneos-arm
 Description: Hides the explore feed in Instagram and enters search field straight away
