@@ -1,11 +1,12 @@
 #import "Tweak.h"
 
 #define IS_BUNDLE_EQUAL_TO(bundleId) CFEqual(CFBundleGetIdentifier(CFBundleGetMainBundle()), CFSTR(bundleId))
-#define GET_IVAR(className,instance,variable) object_getIvar(instance, class_getInstanceVariable(objc_getClass(#className), #variable))
+#define GET_IVAR(clazz,instance,variable) object_getIvar(instance, class_getInstanceVariable(clazz, #variable))
 
 
 Class class_IGExploreViewController;
 Class class_IGExploreGridViewController;
+Class class_IGExploreSeachTitleView;
 
 
 %hook IGViewController
@@ -14,14 +15,17 @@ Class class_IGExploreGridViewController;
     %orig;
     Class clazz = [self class];
     if (clazz == class_IGExploreViewController) {
-        IGExploreSeachTitleView *searchTitleView = GET_IVAR(IGExploreViewController, self, _searchTitleView);
+        IGExploreSeachTitleView *searchTitleView = GET_IVAR(class_IGExploreViewController, self, _searchTitleView);
 
-        IGSearchBar *searchBar = GET_IVAR(IGExploreSeachTitleView, searchTitleView, _searchBar);
+        if (class_IGExploreSeachTitleView == nil) {
+            class_IGExploreSeachTitleView = objc_getClass("IGExploreSeachTitleView");
+        }
+        IGSearchBar *searchBar = GET_IVAR(class_IGExploreSeachTitleView, searchTitleView, _searchBar);
 
         [self searchTitleViewDidRequestSearchPresentation:searchBar];
 
 
-        IGShimmeringGridView *shimmeringGridView = GET_IVAR(IGExploreViewController, self, _shimmeringGridView);
+        IGShimmeringGridView *shimmeringGridView = GET_IVAR(class_IGExploreViewController, self, _shimmeringGridView);
 
         shimmeringGridView.hidden = YES;
     } else if (clazz == class_IGExploreGridViewController) {
