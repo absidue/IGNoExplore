@@ -9,6 +9,7 @@ TWEAK_NAME = IGNoExplore
 
 IGNoExplore_FILES = Tweak.x
 IGNoExplore_CFLAGS = -fobjc-arc
+IGNoExplore_LOGOS_DEFAULT_GENERATOR = internal
 
 after-install::
 	install.exec 'uiopen instagram:'
