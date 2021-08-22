@@ -4,7 +4,14 @@ Version: 0.0.5
 Depends: firmware (>= 13.0), org.coolstar.libhooker | mobilesubstrate
 Architecture: iphoneos-arm
 Description: Hides the explore feed in Instagram and enters search field straight away
+ Hides the explore feed on the Instagram search page and focuses the search field immediately.
+ .
+ Works with the latest Instagram version at the time of release, please file an issue on the GitHub page if it's broken for you.
+ .
+ No options to configure.
 Maintainer: absidue
 Author: absidue
 Section: Tweaks
+Icon: https://apt.absidue.me/assets/icons/me.absidue.ignoexplore.png
+Homepage: https://github.com/absidue/IGNoExplore/
 Tag: compatible_min::ios13.0
